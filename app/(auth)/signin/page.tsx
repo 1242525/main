@@ -1,10 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function SignIn() {
+function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const justRegistered = searchParams.get("registered") === "1";
@@ -32,10 +32,8 @@ export default function SignIn() {
         setError(data.error || "로그인에 실패했습니다.");
         return;
       }
-      // 토큰 저장
       localStorage.setItem("user_token", data.token);
       localStorage.setItem("user_info", JSON.stringify(data.user));
-      // 메인 페이지로 이동
       router.push("/");
     } catch (err) {
       setError("서버 오류가 발생했습니다.");
@@ -48,7 +46,6 @@ export default function SignIn() {
     <section>
       <div className="mx-auto max-w-6xl px-4 sm:px-6">
         <div className="py-12 md:py-20">
-          {/* Section header */}
           <div className="pb-12 text-center">
             <h1 className="animate-[gradient_6s_linear_infinite] bg-[linear-gradient(to_right,var(--color-gray-200),var(--color-indigo-200),var(--color-gray-50),var(--color-indigo-300),var(--color-gray-200))] bg-[length:200%_auto] bg-clip-text font-nacelle text-3xl font-semibold text-transparent md:text-4xl">
               Welcome back
@@ -61,7 +58,6 @@ export default function SignIn() {
             </p>
           )}
 
-          {/* Form */}
           <form className="mx-auto max-w-[400px]" onSubmit={handleSubmit}>
             <div className="space-y-5">
               <div>
@@ -119,7 +115,6 @@ export default function SignIn() {
               </button>
             </div>
           </form>
-          {/* Bottom link */}
           <div className="mt-6 text-center text-sm text-indigo-200/65">
             Don't you have an account?{" "}
             <Link className="font-medium text-cyan-300" href="/signup">
@@ -129,5 +124,13 @@ export default function SignIn() {
         </div>
       </div>
     </section>
+  );
+}
+
+export default function SignIn() {
+  return (
+    <Suspense>
+      <SignInForm />
+    </Suspense>
   );
 }
