@@ -20,6 +20,7 @@ export default function InquiryPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
+  const [serialNumber, setSerialNumber] = useState("");
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
@@ -121,6 +122,11 @@ export default function InquiryPage() {
                 <option className="bg-white text-black">결제/구매</option>
                 <option className="bg-white text-black">버그 신고</option>
               </select>
+            </div>
+            <div>
+              <label className="text-sm text-gray-400 mb-2 block">기기 시리얼 넘버</label>
+              <input value={serialNumber} onChange={(e) => setSerialNumber(e.target.value)} placeholder="기기 시리얼 넘버를 입력하세요" disabled={!isLoggedIn}
+                className="w-full bg-white/5 border border-white/10 px-4 py-3 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-cyan-400 disabled:opacity-50" />
             </div>
             <div>
               <label className="text-sm text-gray-400 mb-2 block">제목 <span className="text-red-500">*</span></label>
