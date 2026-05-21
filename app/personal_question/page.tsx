@@ -45,6 +45,7 @@ export default function InquiryPage() {
       formData.append("title", title);
       formData.append("content", content);
       formData.append("category", category);
+      if (serialNumber) formData.append("serial_number", serialNumber);
       files.forEach((file) => formData.append("files", file));
 
       const res = await fetch("/api/inquiries", {
@@ -65,6 +66,7 @@ export default function InquiryPage() {
       setTitle("");
       setContent("");
       setFiles([]);
+      setSerialNumber("");
     } catch (e) {
       setError("서버 오류가 발생했습니다.");
     } finally {
